@@ -1,31 +1,31 @@
 -- Set blip name
 local license_positions = {
   ["police"] = {
-    info = {['bname'] = "Police License",['context']= "police", ['x'] =, ['y'] =, ['z'] = },
+    info = {['bname'] = "Licenta Politie",['context']= "police", ['x'] =441.86703491211, ['y'] =-982.09912109375, ['z'] = 30.689605712891},
   },
   ["law"] = {
-    info = {['bname'] = "Lawyer License",['context']= "law", ['x'] =, ['y'] =, ['z'] = },
+    info = {['bname'] = "Licenta Avocatura",['context']= "law", ['x'] =-1913.4498291016, ['y'] =-578.23413085938, ['z'] = 14.700349807739},
   },
   ["cpp"] = {
-    info = {['bname'] = "C++ License",['context']= "cpp", ['x'] =, ['y'] =, ['z'] = },
+    info = {['bname'] = "Aptitudini C++",['context']= "cpp", ['x'] =705.81683349609, ['y'] =-964.90258789063, ['z'] = 30.395399093628},
   },
   ["java"] = {
-    info = {['bname'] = "Java License",['context']= "java", ['x'] =, ['y'] =, ['z'] = },
+    info = {['bname'] = "Aptitudini Java",['context']= "java", ['x'] =717.83355712891, ['y'] =-973.62866210938, ['z'] = 30.395320892334},
   },
   ["medicine"] = {
-    info = {['bname'] = "Medicine License",['context']= "medicine", ['x'] =, ['y'] =, ['z'] = },
+    info = {['bname'] = "Diploma Medicina",['context']= "medicine", ['x'] =240.126953125, ['y'] =-1380.1204833984, ['z'] = 33.741771697998},
   },
   ["transport"] = {
-    info = {['bname'] = "Transport License",['context']= "transport", ['x'] =, ['y'] =, ['z'] = },
+    info = {['bname'] = "Licenta de Transport",['context']= "transport", ['x'] =-269.44073486328, ['y'] =-955.83953857422, ['z'] = 31.22313117981},
   },
   ["chemistry"] = {
-    info = {['bname'] = "Chemistry License",['context']= "chemistry", ['x'] =, ['y'] =, ['z'] = },
+    info = {['bname'] = "Diploma Chimie",['context']= "chemistry", ['x'] =598.79302978516,['y']=147.6453704834,['z']=61.672721862793},
   },
   ["heavywpn"] = {
-    info = {['bname'] = "Heavy Weapons License",['context']= "heavy weapon", ['x'] =, ['y'] =, ['z'] = },
+    info = {['bname'] = "Permis PORT-ARMA GREA",['context']= "heavy weapon", ['x'] =-455.51950073242, ['y'] =6008.0795898438, ['z'] = 31.490114212036},
   },
   ["lowwpn"] = {
-    info = {['bname'] = "Low Weapons License",['context']= "low weapon", ['x'] =, ['y'] =, ['z'] = },
+    info = {['bname'] = "Permis PORT-ARMA USOARA",['context']= "low weapon", ['x'] =-438.83303833008, ['y'] =5978.3310546875, ['z'] = 31.490161895752},
   },
 }
 -- Display Map Blips
@@ -35,8 +35,8 @@ Citizen.CreateThread(function()
         local pos = v.info
         local blipname = v.info.bname
         local blip = AddBlipForCoord(pos.x, pos.y, pos.z) -- here u can set up ur position, this is a test position
-        SetBlipSprite(blip, 181)
-        SetBlipColour(blip, 1)
+        SetBlipSprite(blip, 498)
+        SetBlipColour(blip, 4)
         SetBlipScale(blip, 0.8)
         SetBlipAsShortRange(blip, true)
         BeginTextCommandSetBlipName("STRING")
@@ -96,6 +96,13 @@ Citizen.CreateThread(function()
   end
 end)
 
+Citizen.CreateThread(function()
+  while true do
+    Citizen.Wait(2000)
+    TriggerServerEvent('vrp:stopmission')
+	end
+end)
+
 function license_text(str)
   SetTextComponentFormat("STRING")
   AddTextComponentString(str)
@@ -115,6 +122,13 @@ end
   AddEventHandler('msg:pedincar', function()
       SetNotificationTextEntry("STRING")
       AddTextComponentString("You can't buy a license from a car!")
+      SetNotificationMessage("CHAR_MP_ARMY_CONTACT", "CHAR_MP_ARMY_CONTACT", true, 1, "License Sys")
+      DrawNotification(false, true)
+  end)
+  RegisterNetEvent('msg:noteligible')
+  AddEventHandler('msg:noteligible', function()
+      SetNotificationTextEntry("STRING")
+      AddTextComponentString("You can't take that mission, you need license for it or you'll be fired!")
       SetNotificationMessage("CHAR_MP_ARMY_CONTACT", "CHAR_MP_ARMY_CONTACT", true, 1, "License Sys")
       DrawNotification(false, true)
   end)
